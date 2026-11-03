@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<!--
+  남윤오 리서치 포트폴리오 · 버전 기록
+  v2.3  2026.11.04  라이트·다크 디자인 통일, 대표 프로젝트 숫자 표시를 담백하게 변경, 경력 흐름 막대 제거
+  v2.2  2026.11.04  대표 프로젝트 카드, 핵심 숫자, 과제·내가 한 일·결과물 구조, 경력 흐름 막대, 모바일 펼침 목록, CV PDF 다운로드
+  v2.1  2026.11.04  고등학교 학력 추가, 단과대학명 표기, 다크 모드 전환 버튼과 화면 효과 추가(한 파일로 통합)
+  v2.0  2026.11.04  프로젝트 숫자 보강(AD 트래킹 규모, 좌담회 33회, 인도 20가구), 2026 상반기 보고서 반영, 고객사 표기를 'L사'로 변경
+  v1.3  2026.10.30  프로젝트 분류를 전환 버튼 + 업무 유형 드롭다운으로 정리, 상단 메뉴·논문 탭 디자인 통일
+  v1.2  2026.10.30  FGD 용어 통일, 교육 조교 과목명 기재, 융합전공 표기
+  v1.1  2026.10.30  화이트 디자인 개편, 한국리서치 프로젝트 추가, 논문 상세화
+  v1.0  2026.10.29  GitHub Pages 첫 게시
+-->
+<meta name="version" content="v2.3 (2026-11-04)">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="리서처 남윤오의 포트폴리오: 연구, 리서치 프로젝트, 경력">
+<title>남윤오 리서치 포트폴리오</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
+<style>
+/* Layout: resume-style. Plain header, sticky tab bar, each section = narrow label column + content column. Projects = clickable list + detail panel */
+:root{
+  --bg:#ffffff; --soft:#f5f6f8; --surface:#ffffff; --ink:#15171c; --ink-2:#3d424a; --muted:#6c717a;
+  --line:#e3e5e9; --line-2:#c9ccd2; --accent:#2457c5; --accent-soft:#eef3fc;
+  --f:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121417; --soft:#1a1d21; --surface:#16191c; --ink:#ececee; --ink-2:#c3c7cd; --muted:#959aa2;
+  --line:#2a2e34; --line-2:#3a3f47; --accent:#7ea4f2; --accent-soft:#1a2436; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121417; --soft:#1a1d21; --surface:#16191c; --ink:#ececee; --ink-2:#c3c7cd; --muted:#959aa2;
+  --line:#2a2e34; --line-2:#3a3f47; --accent:#7ea4f2; --accent-soft:#1a2436; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:16px;line-height:1.7;word-break:keep-all;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+p{margin:0}
+ul,ol{margin:0}
+.in{max-width:1100px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+
+/* Header */
+.head .in{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:40px;align-items:start;padding-block:64px 40px}
+.head h1{margin:0;font-size:40px;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+.head h1 small{font-size:17px;font-weight:500;color:var(--muted);margin-left:10px;letter-spacing:0}
+.head .role{margin-top:8px;font-size:18px;font-weight:500;color:var(--ink-2)}
+.head .intro{margin-top:20px;max-width:40em;color:var(--ink-2);font-size:16.5px}
+.contact{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:22px;font-size:14.5px;color:var(--muted)}
+.contact b{color:var(--ink);font-weight:500;margin-left:6px}
+.copy{font-size:12px;border:1px solid var(--line-2);background:var(--surface);padding:0 8px;margin-left:6px;line-height:20px;border-radius:4px}
+.photo{width:132px;max-width:100%;aspect-ratio:320/368;object-fit:cover;display:block;border-radius:6px}
+
+/* Top bar: name + pill tabs */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar .in{display:flex;align-items:center;gap:16px;height:58px}
+.bar .nm{font-weight:700;font-size:15px;text-decoration:none;white-space:nowrap}
+.tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;min-width:0;padding:2px}
+.tabs::-webkit-scrollbar{display:none}
+.tabs a{text-decoration:none;font-size:14.5px;font-weight:500;color:var(--ink-2);padding:7px 14px;border-radius:999px;white-space:nowrap;transition:background .15s,color .15s}
+.tabs a:hover{background:var(--soft);color:var(--ink)}
+.tabs a.on{background:var(--ink);color:var(--bg)}
+
+/* Sections */
+.sec{display:grid;grid-template-columns:170px minmax(0,1fr);gap:32px;padding-block:56px;border-bottom:1px solid var(--line)}
+.sec:last-of-type{border-bottom:0}
+.sec > h2{margin:0;font-size:17px;font-weight:700;line-height:1.5;position:sticky;top:76px;align-self:start}
+.sec > h2 small{display:block;font-size:12.5px;font-weight:500;color:var(--muted)}
+.body{min-width:0}
+.h3{margin:0 0 12px;font-size:15px;font-weight:700}
+
+/* About */
+.kv{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 32px}
+.kv div{display:grid;grid-template-columns:84px minmax(0,1fr);gap:12px;padding:12px 0;border-top:1px solid var(--line);font-size:15px}
+.kv dt{color:var(--muted);font-size:14px}
+.kv dd{margin:0}
+
+/* Paper */
+.paper-meta{font-size:14px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 12px}
+.paper-title{margin:6px 0 4px;font-size:21px;font-weight:700;line-height:1.5;letter-spacing:-.01em;text-wrap:balance}
+.paper-en{font-size:14px;color:var(--muted)}
+.authors{margin-top:12px;font-size:15px}
+.authors b{font-weight:700;text-decoration:underline;text-underline-offset:4px}
+.badge{display:inline-block;font-size:12px;font-weight:600;padding:1px 8px;border-radius:4px;background:var(--soft);color:var(--ink-2);margin-left:6px;vertical-align:1px}
+.badge.a{background:var(--accent-soft);color:var(--accent)}
+.seg,.segctl{display:inline-flex;gap:2px;padding:4px;background:var(--soft);border-radius:10px;max-width:100%;overflow-x:auto;scrollbar-width:none}
+.seg::-webkit-scrollbar,.segctl::-webkit-scrollbar{display:none}
+.seg{margin:28px 0 22px}
+.seg button,.segctl button{border:0;background:transparent;padding:7px 14px;font-size:14.5px;font-weight:500;color:var(--muted);white-space:nowrap;border-radius:7px;transition:background .15s,color .15s}
+.seg button:hover,.segctl button:hover{color:var(--ink)}
+.seg button[aria-selected="true"],.segctl button[aria-selected="true"]{background:var(--surface);color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.08),0 0 0 1px var(--line)}
+.segctl small{font-size:12px;color:var(--muted);margin-left:5px;font-weight:500;font-variant-numeric:tabular-nums}
+.lead{font-size:16px;color:var(--ink-2);max-width:46em;margin-bottom:18px}
+.tbl{width:100%;border-collapse:collapse;font-size:15px}
+.tbl th{width:120px;text-align:left;font-weight:500;color:var(--muted);padding:11px 0;vertical-align:top;border-top:1px solid var(--line)}
+.tbl td{padding:11px 0 11px 16px;border-top:1px solid var(--line);vertical-align:top}
+.tbl tr:last-child th,.tbl tr:last-child td{border-bottom:1px solid var(--line)}
+.tbl ul{padding-left:18px}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px}
+.col-h{font-size:13.5px;font-weight:700;color:var(--muted);padding-bottom:8px;border-bottom:1px solid var(--ink);margin-bottom:4px}
+.col-h.a{color:var(--accent);border-bottom-color:var(--accent)}
+.items{list-style:none;padding:0}
+.items li{padding:12px 0;border-bottom:1px solid var(--line);font-size:15px;line-height:1.6}
+.items li b{display:block;font-weight:600;margin-bottom:2px}
+.items li span{color:var(--ink-2)}
+.note{margin-top:16px;font-size:14px;color:var(--muted)}
+.link{font-size:14px;color:var(--accent);text-decoration:none}
+.link:hover{text-decoration:underline}
+
+/* Projects */
+.pj-ctrl{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px}
+.sel{display:inline-flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)}
+.sel select{appearance:none;-webkit-appearance:none;font:inherit;font-size:14.5px;font-weight:500;color:var(--ink);background:var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23868b94' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 12px center;border:1px solid var(--line);border-radius:8px;padding:8px 36px 8px 12px;cursor:pointer;min-width:150px}
+.sel select:hover{border-color:var(--line-2)}
+.result-n{font-size:13.5px;color:var(--muted);margin:-8px 0 16px}
+.result-n b{color:var(--ink);font-weight:600}
+.pj{display:grid;grid-template-columns:300px minmax(0,1fr);gap:24px;align-items:start}
+.pj-list{display:flex;flex-direction:column;gap:22px;position:sticky;top:64px;max-height:calc(100vh - 80px);overflow-y:auto;padding-right:2px}
+.pj-group > h3{margin:0;font-size:13px;font-weight:700;color:var(--muted);padding-bottom:6px;border-bottom:1px solid var(--ink)}
+.pj-group > h3 span{display:block;font-weight:400;font-size:12px}
+.pj-group > ul{list-style:none;padding:0}
+.pj-item{width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);background:transparent;padding:11px 8px;display:block;border-radius:0}
+.pj-item:hover{background:var(--soft)}
+.pj-item .t{display:block;font-weight:600;font-size:15px;line-height:1.45}
+.pj-item .m{display:block;font-size:12.5px;color:var(--muted);margin-top:2px}
+.pj-item .k{font-size:11px;font-weight:700;color:var(--accent);margin-right:6px;vertical-align:1px}
+.pj-item[aria-current="true"]{background:var(--accent-soft)}
+.pj-item[aria-current="true"] .t{color:var(--accent)}
+.empty{font-size:14px;color:var(--muted);padding:10px 0}
+
+.detail{border:1px solid var(--line);border-radius:8px;background:var(--surface);min-width:0}
+.d-head{padding:24px 28px 20px;border-bottom:1px solid var(--line)}
+.d-meta{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:13.5px;color:var(--muted)}
+.d-meta b{color:var(--ink);font-weight:600}
+.d-head h3{margin:6px 0 0;font-size:22px;font-weight:700;line-height:1.4;letter-spacing:-.01em}
+.d-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.d-tags span{font-size:12.5px;background:var(--soft);color:var(--ink-2);padding:2px 8px;border-radius:4px}
+.d-body{padding:22px 28px 26px;display:flex;flex-direction:column;gap:22px}
+.d-sum{font-size:16px;color:var(--ink-2);max-width:46em}
+.d-scope .tbl th{width:90px}
+.groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px 28px}
+.group h4{margin:0 0 6px;font-size:14.5px;font-weight:700;padding-bottom:6px;border-bottom:1px solid var(--ink);display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.group h4 small{font-weight:400;color:var(--muted);font-size:13px}
+.group ul{padding-left:18px;font-size:15px;display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.group li::marker{color:var(--muted)}
+.d-nav{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+.d-nav button{border:0;background:transparent;padding:14px 28px;text-align:left;min-width:0}
+.d-nav button+button{border-left:1px solid var(--line);text-align:right}
+.d-nav button:hover:not(:disabled){background:var(--soft)}
+.d-nav button:disabled{opacity:.35;cursor:default}
+.d-nav small{display:block;font-size:12px;color:var(--muted)}
+.d-nav span{display:block;font-size:14.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Skills */
+.skills{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.skills ul{padding-left:18px;font-size:15px;display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.skills li::marker{color:var(--muted)}
+
+/* Timeline */
+.tl{list-style:none;padding:0;margin-bottom:36px}
+.tl:last-child{margin-bottom:0}
+.tl li{display:grid;grid-template-columns:160px minmax(0,1fr);gap:16px;padding:13px 0;border-top:1px solid var(--line)}
+.tl li:last-child{border-bottom:1px solid var(--line)}
+.tl .d{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.tl .h{font-weight:600}
+.tl .h.big{font-size:18px;font-weight:700;letter-spacing:-.01em}
+.tl .s{color:var(--ink-2);font-size:14.5px;margin-top:1px}
+
+footer .in{padding-block:32px 48px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:13px;color:var(--muted)}
+
+@media (max-width:980px){
+  .pj{grid-template-columns:minmax(0,1fr)}
+  .pj-list{position:static;max-height:none;overflow:visible}
+}
+@media (max-width:820px){
+  .sec{grid-template-columns:minmax(0,1fr);gap:18px;padding-block:44px}
+  .sec > h2{position:static}
+  .sec > h2 small{display:inline;margin-left:8px}
+  .kv,.cols,.skills{grid-template-columns:minmax(0,1fr)}
+  .cols{gap:22px}
+}
+@media (max-width:560px){
+  .head .in{grid-template-columns:minmax(0,1fr);gap:20px;padding-block:40px 28px}
+  .photo{width:96px;order:-1}
+  .head h1{font-size:34px}
+  .head h1 small{display:block;margin:4px 0 0}
+  .tl li{grid-template-columns:minmax(0,1fr);gap:0}
+  .tbl th{width:84px}
+  .d-head,.d-body{padding-left:18px;padding-right:18px}
+  .d-nav button{padding:12px 18px}
+}
+
+/* Featured projects */
+.feat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:40px}
+.fcard{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:18px 20px;display:flex;flex-direction:column;gap:8px;min-width:0;transition:border-color .2s}
+.fcard:hover{border-color:var(--ink)}
+.f-meta{font-size:12.5px;color:var(--muted)}
+.f-title{font-size:17px;font-weight:700;line-height:1.4;letter-spacing:-.01em}
+.f-facts{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.f-facts b{color:var(--ink);font-weight:600}
+.f-task{font-size:14px;color:var(--ink-2);line-height:1.6}
+.f-more{margin-top:auto;padding-top:6px;font-size:13.5px;font-weight:500;color:var(--muted)}
+.fcard:hover .f-more{color:var(--ink)}
+/* Detail: numbers, steps, outputs, collapsible scope */
+.d-facts{display:flex;flex-wrap:wrap;gap:4px 20px;font-size:14.5px;color:var(--ink-2);padding-bottom:16px;border-bottom:1px solid var(--line)}
+.d-facts b{color:var(--ink);font-weight:700;margin-left:5px}
+.step-l{font-size:13px;font-weight:600;color:var(--muted);margin:0 0 6px}
+.task{font-size:16px;font-weight:600;line-height:1.55}
+.outs{display:flex;flex-wrap:wrap;gap:6px}
+.outs span{border:1px solid var(--line);border-radius:6px;padding:4px 10px;font-size:14px;background:var(--soft)}
+details.more{border-top:1px solid var(--line);padding-top:12px}
+details.more summary{cursor:pointer;font-size:14px;font-weight:600;color:var(--ink-2);list-style:none;display:flex;align-items:center;gap:6px}
+details.more summary::-webkit-details-marker{display:none}
+details.more summary::before{content:"";width:7px;height:7px;border-right:1.6px solid currentColor;border-bottom:1.6px solid currentColor;transform:rotate(-45deg);transition:transform .2s}
+details.more[open] summary::before{transform:rotate(45deg)}
+details.more .tbl{margin-top:10px}
+.cvbtn{display:inline-flex;align-items:center;font-size:13.5px;font-weight:600;color:var(--bg);background:var(--ink);text-decoration:none;padding:5px 12px;border-radius:999px}
+.cvbtn:hover{opacity:.85}
+/* Mobile accordion */
+.pj-group li > .detail{margin:2px 0 14px}
+@media (max-width:980px){
+  .pj-item{position:relative;padding-right:34px}
+  .pj-item::after{content:"";position:absolute;right:14px;top:50%;width:8px;height:8px;border-right:1.6px solid var(--muted);border-bottom:1.6px solid var(--muted);transform:translateY(-70%) rotate(45deg);transition:transform .2s}
+  .pj-item[aria-expanded="true"]::after{transform:translateY(-30%) rotate(-135deg)}
+  .pj > .detail{display:none}
+}
+@media (max-width:820px){
+  .feat{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:84%;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;scrollbar-width:thin}
+  .fcard{scroll-snap-align:start}
+}
+@media (prefers-reduced-motion:reduce){.fcard,details.more summary::before,.pj-item::after{transition:none}}
+
+/* Theme toggle, progress, motion */
+main{counter-reset:sec}
+.sec > h2::before{counter-increment:sec}
+.bar .in{position:relative}
+.theme-btn{margin-left:auto;flex:none;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);border-radius:999px;padding:6px 12px 6px 10px;font-size:13.5px;font-weight:500;transition:border-color .2s,color .2s}
+.theme-btn:hover{border-color:var(--line-2);color:var(--ink)}
+.theme-btn svg{width:16px;height:16px;transition:transform .5s cubic-bezier(.3,1.4,.5,1)}
+.theme-btn .moon{display:none}
+.is-dark .theme-btn .sun{display:none}
+.is-dark .theme-btn .moon{display:block}
+.theme-btn:active svg{transform:rotate(-40deg) scale(.85)}
+.progress{position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--accent);transform-origin:0 50%;transform:scaleX(0)}
+.theming,.theming *{transition:background-color .35s ease,color .35s ease,border-color .35s ease,box-shadow .35s ease!important}
+@keyframes rise{from{opacity:.0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.detail.swap{animation:rise .28s ease}
+[role="tabpanel"]:not([hidden]){animation:rise .25s ease}
+.pj-item{transition:background .15s,padding-left .15s}
+.pj-item:hover{padding-left:12px}
+.totop{position:fixed;right:calc(20px + env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);display:grid;place-items:center;text-decoration:none;font-size:18px;box-shadow:0 4px 14px rgba(0,0,0,.12);opacity:0;transform:translateY(10px);pointer-events:none;transition:opacity .25s,transform .25s;z-index:25}
+.totop.show{opacity:1;transform:none;pointer-events:auto}
+.totop:hover{border-color:var(--line-2)}
+@media (max-width:560px){.theme-btn span{display:none}.theme-btn{padding:7px}}
+@media (prefers-reduced-motion:reduce){.detail.swap,[role="tabpanel"]:not([hidden]){animation:none}.pj-item,.totop,.theme-btn svg{transition:none}.theming,.theming *{transition:none!important}}
+@media (max-width:560px){.bar .nm{display:none}.pj-ctrl{flex-direction:column;align-items:stretch}.sel select{flex:1}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.tabs a,.seg button,.segctl button{transition:none}}
+</style>
+
+</head>
+<body>
+<header class="head" id="top">
+  <div class="in">
+    <div>
+      <h1>남윤오<small>Nam Yoon Oh</small></h1>
+      <p class="role">리서처 · 한국리서치 밸류본부 연구원</p>
+      <p class="intro">정부·공공기관의 사회조사와 글로벌 가전 기업 L사의 마케팅 리서치를 수행했습니다. 설문 설계와 실사부터 데이터 가공, 결과 보고까지 조사 전 과정을 맡아 왔고, 인도 현지 홈비짓 조사를 직접 설계하고 진행했습니다.</p>
+      <div class="contact">
+        <span>학력<b>고려대학교 정부행정학부 · 융합전공 인문학과정의</b></span>
+        <span>메일<b id="email">blueboy0044@gmail.com</b><button class="copy" id="copyBtn" type="button">복사</button></span>
+        <span>어학<b>TOEIC 935 · OPIc IH</b></span>
+        <a class="cvbtn" href="cv.pdf" target="_blank" rel="noopener">CV 다운로드 (PDF)</a>
+      </div>
+    </div>
+    <img class="photo" src="data:image/jpeg;base64,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" alt="남윤오 프로필 사진">
+  </div>
+</header>
+
+<nav class="bar" aria-label="섹션 이동">
+  <div class="in"><a class="nm" href="#top">남윤오</a><div class="tabs" id="tabs">
+    <a href="#about">소개</a>
+    <a href="#projects">프로젝트</a>
+    <a href="#paper">논문</a>
+    <a href="#skills">역량</a>
+    <a href="#timeline">경력·학력</a>
+  </div>
+  <button class="theme-btn" id="themeBtn" type="button" aria-label="다크 모드로 바꾸기"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span id="themeLbl">다크</span></button>
+  <div class="progress" id="prog" aria-hidden="true"></div></div>
+</nav>
+<a class="totop" id="totop" href="#top" aria-label="맨 위로">↑</a>
+
+<main class="in">
+  <!-- 소개 -->
+  <section class="sec" id="about">
+    <h2>소개<small>About</small></h2>
+    <div class="body">
+      <p class="lead" style="font-size:17px;color:var(--ink)">공공조사와 마케팅 리서치를 모두 경험했습니다. 케이스탯리서치에서 국정과제 정책 만족도 조사, 한국인의 의식·가치관 조사 등 정부 조사를 수행했고, 한국리서치에서는 글로벌 가전 기업 L사의 광고 효과 트래킹을 전담하며 고객자문단 좌담회와 인도 현지 조사를 맡았습니다.</p>
+      <dl class="kv">
+        <div><dt>조사 분야</dt><dd>정책·사회조사, 광고·브랜드 트래킹, 제품 개발 조사</dd></div>
+        <div><dt>정량 조사</dt><dd>설문 운영, SPSS 데이터 가공, 결과표·보고서 작성</dd></div>
+        <div><dt>정성 조사</dt><dd>FGD, 하이브리드 갱, 해외 홈비짓</dd></div>
+        <div><dt>해외 조사</dt><dd>인도 델리·첸나이 20가구 홈비짓 (2026)</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- 프로젝트 -->
+  <section class="sec" id="projects">
+    <h2>프로젝트<small>Projects</small></h2>
+    <div class="body">
+      <p class="h3">대표 프로젝트</p>
+      <div class="feat" id="feat"></div>
+      <p class="h3" style="margin-top:8px">전체 프로젝트</p>
+      <div class="pj-ctrl">
+        <div class="segctl" id="scope" role="tablist" aria-label="프로젝트 범위"></div>
+        <label class="sel" for="tagSel">업무 유형<select id="tagSel"><option value="">전체</option></select></label>
+      </div>
+      <p class="result-n" id="resultN"></p>
+      <div class="pj">
+        <div class="pj-list" id="pjList"></div>
+        <article class="detail" id="detail" aria-live="polite"></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 논문 -->
+  <section class="sec" id="paper">
+    <h2>논문<small>Publication</small></h2>
+    <div class="body">
+      <div class="paper-meta"><span>공공기관과 정책연구 제3권 제1호 (2025.06)</span><span>한국조세재정연구원</span><span>pp. 41–71</span></div>
+      <p class="paper-title">공공기관의 인적자원관리에 대한 사례연구: 한국장학재단의 인적자원 확보, 이동, 역량개발, 동기부여를 중심으로</p>
+      <p class="paper-en">A Case Study on Human Resource Management in the Public Institution: Focusing on Recruitment, Staffing, Competency Development, and Motivating of Human Resources at KOSAF</p>
+      <p class="authors"><b>남윤오</b> · 임예영 · 오정록(교신) <span class="badge a">제1저자</span><span class="badge">KCI 등재후보</span></p>
+
+      <div class="seg" role="tablist" aria-label="논문 내용" id="paperTabs">
+        <button type="button" role="tab" aria-selected="true" aria-controls="t0" id="b0">연구 설계</button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="t1" id="b1">① 확보</button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="t2" id="b2">② 이동</button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="t3" id="b3">③ 역량개발</button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="t4" id="b4">④ 동기부여</button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="t5" id="b5">결론 · 한계</button>
+      </div>
+
+      <div role="tabpanel" id="t0" aria-labelledby="b0">
+        <p class="lead">위탁집행형 준정부기관인 한국장학재단의 인적자원관리를 확보·이동·역량개발·동기부여 네 측면에서 진단하고, 각 기능이 재단의 전략 목표와 어떻게 연결되는지 분석해 개선 방안을 제시했습니다.</p>
+        <table class="tbl">
+          <tr><th>연구 배경</th><td>위탁집행형 준정부기관에 대한 인적자원관리 사례연구가 부족한 상황에서, 한국장학재단은 2019년 국가유공자 가점 오적용 채용, 교육부 공직기강 점검에서 드러난 승진 배수 범위 밖 승격 등 인사 운영의 미흡함이 확인된 기관</td></tr>
+          <tr><th>연구 방법</th><td>질적 사례연구. 이창길(2022)의 공공부문 전략적 인적자원관리 체계도를 분석 틀로 적용</td></tr>
+          <tr><th>공개 자료</th><td>재단 홈페이지, ALIO 공공기관 경영정보 공개시스템(인사규정·시행규칙 2024.6 개정본, 감사실 「2023년 인사부 종합감사 결과보고」 감사기간 2017.4–2023.3)</td></tr>
+          <tr><th>정보공개청구</th><td>공개 자료로 파악하기 어려운 역량개발·동기부여 부분은 정보공개청구로 내부자료 4종 확보
+            <ul style="margin-top:4px"><li>2024년 종합연수계획</li><li>직제규정</li><li>2024년 직원 스트레스 관리 프로그램 운영 개요</li><li>역량컨설팅 결과</li></ul></td></tr>
+          <tr><th>맡은 역할</th><td>학부 연구 프로그램(S-CURT, 2024년 2학기)에서 연구 설계, 자료 수집(정보공개청구 포함), 현황 분석, 초안 집필 주도</td></tr>
+          <tr><th>주제어</th><td>인적자원관리, 한국장학재단, 사례연구, 공공기관</td></tr>
+        </table>
+      </div>
+
+      <div role="tabpanel" id="t1" aria-labelledby="b1" hidden>
+        <p class="lead">공개경쟁 원칙, 외부 전문가 참여, 채용검증위원회 등 제도는 갖췄고 공정채용 우수기관 인증을 3년 연속(2023) 받았지만, 감사 결과 운영 과정에서 규정 미준수가 반복됐습니다.</p>
+        <div class="cols">
+          <div><div class="col-h">드러난 문제 (감사 지적 4건)</div><ul class="items">
+            <li><b>경력 산정 부적정</b><span>2019년 채용에서 대학원 경력 1개월 미만 절사 기준이 없어 지원자 간 산정 방식이 달라짐</span></li>
+            <li><b>실무면접 평가 편차</b><span>평가그룹별 점수를 단순 평균해 위원 성향과 조 편성이 합격 여부에 영향</span></li>
+            <li><b>심층면접 채점표 부당 처리</b><span>2020년 채점표를 파쇄·재배부하고 출력일자를 수정해 결과를 보고</span></li>
+            <li><b>위탁업체 계약조건 누락</b><span>부정당업자 입찰참가 제한 조건이 이후 11건의 채용 위탁 계약에 반영되지 않음</span></li>
+          </ul></div>
+          <div><div class="col-h a">개선 방안</div><ul class="items">
+            <li><b>기준 부재 즉시 보고·관리 시스템</b><span>규정에 없는 사항을 담당자가 발견하면 바로 보고하고 기준을 마련하는 체계</span></li>
+            <li><b>내부규정 정기 교육</b><span>분기마다 관련 부서 직원에게 인사규정 교육 실시</span></li>
+            <li><b>채용비위 경각심을 높이는 조직문화</b><span>비위의 심각성을 공유하고 규정 준수를 강조</span></li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div role="tabpanel" id="t2" aria-labelledby="b2" hidden>
+        <p class="lead">승진은 연공 중심에 성과·역량을 일부 반영(특별승진)하는 심사 방식입니다. 감사 기간 동안 승진 과정의 객관성과 공정성을 해친 사례가 확인됐습니다.</p>
+        <div class="cols">
+          <div><div class="col-h">드러난 문제 (감사 지적 4건)</div><ul class="items">
+            <li><b>승진심사 참고자료 부적정</b><span>징계·주의 기록 누락, 일부 대상자에게만 평판을 선택적으로 기재</span></li>
+            <li><b>승진후보자 명부 작성 부적정</b><span>연수 미이수를 이유로 한 부당 제외, 후보자 명부 누락</span></li>
+            <li><b>명부 작성 기준일 불일치</b><span>2018–2022년 기준일이 해마다 달라 대상자 간 유불리 발생</span></li>
+            <li><b>특별승진 인사위원회 운영 부적정</b><span>외부 전문가 1/3 이상 기준을 지키지 않고 관련 문구를 임의 삭제</span></li>
+          </ul></div>
+          <div><div class="col-h a">개선 방안</div><ul class="items">
+            <li><b>기준 미비 보고·관리 시스템</b><span>기준일 차이처럼 결과에 직결되는 공백을 빠르게 보고·보완</span></li>
+            <li><b>규정 재확인 업무 절차·가이드라인</b><span>인사이동 업무 전·중에 규정과 지침을 다시 확인하는 단계 명문화</span></li>
+            <li><b>승진 검증위원회 신설</b><span>채용검증위원회처럼 승진의 공정성을 주기적으로 점검</span></li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div role="tabpanel" id="t3" aria-labelledby="b3" hidden>
+        <p class="lead">기반·리더십·직무공통·직무전문 4개 역량 모델과 그에 맞춘 프로그램(직무 9개, 직급별 리더십 5개, 기반역량 10개 체계)은 잘 갖췄지만, 효과를 측정하고 내재화하는 단계가 약했습니다.</p>
+        <div class="cols">
+          <div><div class="col-h">드러난 문제</div><ul class="items">
+            <li><b>성과 연계 측정 부재</b><span>학위 과정·K-MBA 등 외부 프로그램 이후 역량 향상을 측정하는 과정이 없음</span></li>
+            <li><b>비대면·집체식 위주 교육</b><span>온라인·집체 교육 중심이라 실무에서의 내재화에 한계</span></li>
+            <li><b>정량 위주 역량 진단</b><span>역량별 1개 문항으로 빈도·수준만 수치화해 개인별 강약점 분석이 어려움</span></li>
+          </ul></div>
+          <div><div class="col-h a">개선 방안</div><ul class="items">
+            <li><b>부서별 성과 발표회·피드백 공유</b><span>교육 결과가 아닌 조직 내 성과 기여도를 확인하는 장치</span></li>
+            <li><b>OJT 방식 확대</b><span>직무 현장에서 필요한 역량을 직접 체득하도록 프로그램 설계</span></li>
+            <li><b>서술형 진단 문항 추가</b><span>역량별 문항 수를 늘리고 실제 과업 수행 사례를 기술하게 함</span></li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div role="tabpanel" id="t4" aria-labelledby="b4" hidden>
+        <p class="lead">직원 스트레스 관리 프로그램(EAP), 일·가정 양립 제도, 유연근무제, 선택적 복지제도(2021~), 직무·성과 중심 인사 로드맵을 운영하고 있지만, 제도가 일부 직원에게만 닿고 있었습니다.</p>
+        <div class="cols">
+          <div><div class="col-h">드러난 문제</div><ul class="items">
+            <li><b>비정규직 유연근무 사용 0명</b><span>2019–2024년 비정규직의 유연근무제 사용자가 한 명도 없음</span></li>
+            <li><b>유연근무 선택지 편중</b><span>대부분 탄력근무제 중 시차출퇴근형에 집중</span></li>
+            <li><b>인사 상담 제도 부재</b><span>상담이 심리 스트레스 관리에 국한돼 직무·평가 관련 문제 해결에 한계</span></li>
+          </ul></div>
+          <div><div class="col-h a">개선 방안</div><ul class="items">
+            <li><b>인사 상담 제도 의무 도입</b><span>인사 상담자 직무를 신설해 직무 적응, 평가, 인사이동 고충까지 상담</span></li>
+            <li><b>유연근무 대상 확대</b><span>비정규직도 직무 특성에 맞는 유연근무를 선택할 수 있도록 구체적 방안 마련</span></li>
+            <li><b>유연근무 선택지 다양화</b><span>업무 스타일과 생활에 맞는 근무 방식을 고를 수 있게 확대</span></li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div role="tabpanel" id="t5" aria-labelledby="b5" hidden>
+        <div class="cols">
+          <div><div class="col-h a">재단의 미래 방향 제안</div><ul class="items">
+            <li><b>승진 기준에 성과·역량 반영 확대</b><span>연공 중심 승진이 직무 동기를 떨어뜨리지 않도록 성과·역량 요소를 늘림</span></li>
+            <li><b>사례 기반 내부 교육 활성화</b><span>규정 미준수·비위 사례와 모범 사례를 내부 성과공유회로 공유</span></li>
+            <li><b>연구의 의의</b><span>대외적으로 문제가 드러나지 않던 기관에서도 내재된 인사 문제를 발굴해 인적자원관리의 중요성을 보여줌</span></li>
+          </ul></div>
+          <div><div class="col-h">한계와 후속 연구</div><ul class="items">
+            <li><b>분석 범위</b><span>성과평가, 보상, 퇴직 관리는 연구 범위에서 제외</span></li>
+            <li><b>1차 자료 부재</b><span>공식 자료·내부 문서 분석에 그쳐 구성원 인터뷰나 설문조사를 하지 못함</span></li>
+            <li><b>이론 심화와 비교</b><span>세부 이론 통합, 국내외 자료 비교, 다른 인사 영역으로의 확장이 후속 과제</span></li>
+          </ul></div>
+        </div>
+      </div>
+
+      <p class="note"><a class="link" href="https://kiss.kstudy.com/Detail/Ar?key=4182038" target="_blank" rel="noopener">KISS 논문 페이지 ↗</a></p>
+    </div>
+  </section>
+
+  <!-- 역량 -->
+  <section class="sec" id="skills">
+    <h2>역량<small>Skills</small></h2>
+    <div class="body skills">
+      <div><p class="h3">정량 조사</p><ul><li>온라인 설문 문항 반영·링크 테스트</li><li>SPSS 데이터 가공, 테이블·Base 검토</li><li>결과표 작성, 주간·월간 보고, 반기 보고서</li><li>Excel (피벗, Power Query, VLOOKUP)</li></ul></div>
+      <div><p class="h3">정성 조사</p><ul><li>FGD 실사 운영, 탑라인 작성</li><li>하이브리드 갱 진행·분석</li><li>해외 홈비짓 설계·진행, 모더레이터 교육</li><li>다이어리 조사 정리, 데스크리서치</li></ul></div>
+      <div><p class="h3">보고 · 문서</p><ul><li>보고서 장표 제작, 결과 해석 문구 작성</li><li>응답자 제시용 정책 설명문 작성</li><li>설문지 번역(영문), 보고서 검수</li><li>학술 논문 집필(제1저자)</li></ul></div>
+    </div>
+  </section>
+
+  <!-- 경력·학력 -->
+  <section class="sec" id="timeline">
+    <h2>경력 · 학력<small>Timeline</small></h2>
+    <div class="body">
+      <p class="h3">경력</p>
+      <ul class="tl">
+        <li><span class="d">2026.02 – 2026.11</span><div><div class="h">한국리서치 밸류본부 · 연구원</div><div class="s">L사 광고 효과 트래킹, 고객자문단 좌담회 33회, 인도 Next RAC 조사(2026.09–10 현지 출장)</div></div></li>
+        <li><span class="d">2026</span><div><div class="h">케이스탯리서치 · 프리랜서 계약</div><div class="s">국정과제 정책 만족도 조사 모니터링용 정책 설명문 제작</div></div></li>
+        <li><span class="d">2025.07 – 2026.01</span><div><div class="h">케이스탯리서치 연구4사업부 · 인턴</div><div class="s">국정과제 정책 만족도 조사, 한국인의 의식·가치관 조사, 시청점유율 기초조사 등</div></div></li>
+      </ul>
+      <p class="h3">학력</p>
+      <ul class="tl">
+        <li><span class="d">2023.03 – 현재</span><div><div class="h big">고려대학교 공공정책대학 정부행정학부</div><div class="s">주전공 · 세종캠퍼스</div></div></li>
+        <li><span class="d">2024.09 – 현재</span><div><div class="h big">고려대학교 문과대학 인문학과정의 융합전공</div><div class="s">융합전공 · 서울캠퍼스</div></div></li>
+        <li><span class="d">2024.09 – 2024.12</span><div><div class="h">학부 연구 프로그램 S-CURT (대학혁신지원사업)</div><div class="s">한국장학재단 인적자원관리 사례연구 수행, 제1저자 논문 게재(2025.06)</div></div></li>
+        <li><span class="d">재학 중</span><div><div class="h">미래인재연구회 (학술 학회)</div><div class="s">행정·인사 이슈 분석, 정책 제안서 기획 및 발표</div></div></li>
+        <li><span class="d">2020.03 – 2023.02</span><div><div class="h">북일고등학교</div><div class="s">졸업</div></div></li>
+      </ul>
+      <p class="h3">교육 조교 · 학습 지원</p>
+      <ul class="tl">
+        <li><span class="d">2025.11</span><div><div class="h">CTL 공모전 「좋은 강의 에세이」</div><div class="s">교수학습정보센터</div></div></li>
+        <li><span class="d">2025.09 – 2025.12</span><div><div class="h">「행정학특강」 TA</div><div class="s">정부행정학부 학습도우미</div></div></li>
+        <li><span class="d">2025.05 – 2025.06</span><div><div class="h">개인 학습컨설팅</div><div class="s">학생 개인별 학습 상담·컨설팅 진행 (교수학습정보센터)</div></div></li>
+        <li><span class="d">2025.03 – 2025.07</span><div><div class="h">「공공인적자원관리와 CDP」 TA</div><div class="s">SEMO Class</div></div></li>
+        <li><span class="d">2025.03 – 2025.07</span><div><div class="h">「공공인적자원관리」 TA</div><div class="s">SEMO Class</div></div></li>
+        <li><span class="d">2024.03 – 2024.07</span><div><div class="h">「행동행정학」 TA</div><div class="s">SEMO Class</div></div></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer><div class="in"><span>© 2026 남윤오</span><span>v2.3 · 마지막 업데이트 2026.11.04</span></div></footer>
+
+<script>
+/* =====================================================================
+   ▼▼▼ 회사 정보: 프로젝트 목록에서 회사 이름 아래에 나오는 설명 ▼▼▼
+   ===================================================================== */
+const COMPANIES = {
+  '한국리서치': '밸류본부 연구원 · 2026.02 – 2026.11',
+  '케이스탯리서치': '연구4사업부 인턴 2025.07 – 2026.01 · 2026 프리랜서 계약',
+};
+
+/* =====================================================================
+   ▼▼▼ 프로젝트 목록: 여기만 고치면 "프로젝트"가 바뀝니다 ▼▼▼
+
+   · 위에 있는 것부터 순서대로 나오고, 회사별로 자동으로 묶입니다.
+   · key: true  → 목록에 "주요" 표시
+   · show: false → 화면에서 숨김 (지우지 않아도 됨)
+   · tags에 적은 말은 위쪽 분류 버튼으로 자동으로 만들어집니다.
+   · 프로젝트 추가: { 부터 }, 까지 한 덩어리를 복사해서 붙여넣고 글자만 바꾸세요.
+   · 따옴표 ' ' 와 쉼표 , 는 지우지 마세요. 글자 안에 ' 를 쓰려면 \' 로 적으세요.
+   · scope(조사 개요), roles(맡은 일 묶음), link(관련 링크), note(메모)는 없어도 됩니다.
+   ===================================================================== */
+const PROJECTS = [
+  /* ================= 한국리서치 · 주요 ================= */
+  {
+    show: true, key: true,
+    company: '한국리서치', client: '글로벌 가전 기업 L사', period: '2026.02 – 2026.11', type: '광고 효과 트래킹 · 정량',
+    tags: ['정량 조사', '데이터 가공', '보고서 작성'],
+    title: 'L사 광고 효과 트래킹 (AD Tracking)',
+    metrics: [['20편', '월 측정 광고'], ['6개', '트랙'], ['450명', '주간 표본']],
+    task: '자사·경쟁사 광고 성과를 매주 같은 기준으로 측정해 광고 집행 판단의 근거를 제공',
+    outputs: ['주간 최선호도·인지도 보고', '월간 Key Index', '2026 상반기 보고서'],
+    summary: '글로벌 가전 기업 L사와 경쟁사의 광고를 온라인 설문으로 측정해 광고 인지도·선호도와 브랜드 최선호도를 주간·월간·반기 단위로 보고하는 상시 트래킹 조사입니다. 한 달 약 20편의 광고를 6개 트랙으로 묶어 운영했고, 설문 운영부터 데이터 가공, 결과표 작성, 정기 보고와 반기 보고서까지 전 과정을 수행했습니다.',
+    scope: [
+      ['고객사', '글로벌 가전 기업 L사'],
+      ['측정 광고', '월 약 20편 (자사 · 경쟁사 광고)'],
+      ['트랙', '6개 · TV, 에어케어, 키친, 리빙, 노트북, 공통 브랜드'],
+      ['표본', '트랙별 주 75명 (6개 트랙, 주 450명)'],
+      ['방법', '온라인 조사(CAWI) · 서울, 경기·인천'],
+      ['보고', '주간 · 월간 · 반기'],
+    ],
+    roles: [
+      { head: '설문 운영', items: [
+        '신규 광고를 설문에 반영하고 측정 기간이 끝난 광고 제외',
+        '링크 테스트로 광고 영상·이미지·문항 노출 점검',
+        '웹솔루션·온라인패널·시스템 부서와 일정·변경 사항 조율',
+      ]},
+      { head: '데이터 가공 · 검토', items: [
+        'SPSS로 응답 데이터 변환·가공',
+        '집계 테이블과 광고별 Base 검토',
+        '오픈응답 검토 및 브랜드 코드 분류',
+        'Key Index·집계표·고객 웹리포트 수치 대조 검수, 원자료 정제·누적',
+      ]},
+      { head: '정기 보고', items: [
+        '결과표 작성',
+        '주간 보고: 브랜드 최선호도·제품 인지도 추이',
+        '월간 Key Index 산출 및 송부',
+      ]},
+      { head: '2026 상반기 보고서', items: [
+        '자사·경쟁사 집행 광고의 편수와 캠페인 운영 방식 비교',
+        '상반기 광고 크리에이티브 트렌드 도출 (세대의 기억 소환, 셀럽 페르소나 확장, 콘텐츠 장르 문법 확장)',
+        '6개 트랙별 광고 성과를 속성별 등급(Norm)으로 진단하고 향후 광고 제작 시사점 제안',
+        '트랙별 브랜드 최선호도 추이와 광고 집행의 관계 분석',
+      ]},
+    ],
+  },
+  {
+    show: true, key: true,
+    company: '한국리서치', client: '글로벌 가전 기업 L사', period: '2026', type: '고객자문단 · 정성',
+    tags: ['정성 조사', '보고서 작성'],
+    title: 'L사 고객자문단 운영 (HS본부 · MS본부)',
+    metrics: [['33회', '좌담회'], ['30명', '하이브리드 갱'], ['8개월', '청소기 프로젝트']],
+    task: '신제품 개발 단계마다 실사용자 반응을 듣고 개발 부서에 빠르게 전달',
+    outputs: ['좌담회별 탑라인 보고서', '청소기 1~3차 좌담회 결과', '하이브리드 갱 분석'],
+    summary: 'L사 HS본부와 MS본부의 고객자문단 좌담회를 총 33회 맡아 실사 진행과 탑라인 작성을 수행했습니다. 특히 신규 청소기 장기 개발 프로젝트에 4월부터 11월까지 참여해 1~3차 좌담회를 진행하고, 30명 규모 하이브리드 갱의 분석을 전담했습니다.',
+    scope: [
+      ['고객사', '글로벌 가전 기업 L사 HS본부, MS본부'],
+      ['진행', 'HS본부 20회 · MS본부 13회 (총 33회)'],
+      ['방법', '고객자문단 좌담회(FGD), 하이브리드 갱'],
+    ],
+    roles: [
+      { head: 'HS본부 고객자문단', note: '20회', items: ['좌담회 실사 진행', '탑라인 보고서 작성'] },
+      { head: 'MS본부 고객자문단', note: '13회', items: ['좌담회 실사 진행', '탑라인 보고서 작성'] },
+      { head: '신규 청소기 장기 개발 프로젝트', note: '2026.04 – 11', items: [
+        '1차 ~ 3차 좌담회 진행',
+        '하이브리드 갱(30명 규모) 분석 전담',
+      ]},
+    ],
+  },
+  {
+    show: true, key: true,
+    company: '한국리서치', client: '글로벌 가전 기업 L사 LSR팀', period: '2026.09.28 – 10.10', type: '해외 홈비짓 · 정성',
+    tags: ['정성 조사', '해외 조사'],
+    title: 'L사 인도 Next RAC(에어컨) 플랫폼 조사',
+    metrics: [['20가구', '홈비짓'], ['2개', '도시'], ['3명', '모더레이터 교육']],
+    task: '인도 가정의 냉방 생활과 설치 현장을 직접 관찰해 신규 에어컨 플랫폼의 개발 근거 마련',
+    outputs: ['홈비짓 조사 설계·사전 과제', '일자별 현장 요약(Daily Key Notes)'],
+    summary: 'L사 LSR팀이 진행한 인도향 신규 에어컨 플랫폼 개발을 위한 현지 조사입니다. 델리와 첸나이에서 총 20가구를 방문했고, 홈비짓 조사 설계부터 현지 실사, 모더레이터 교육까지 전담했습니다.',
+    scope: [
+      ['고객사', '글로벌 가전 기업 L사 LSR팀'],
+      ['지역', '인도 델리 · 첸나이 담당'],
+      ['기간', '2026.09.28 – 10.10 현지 조사'],
+      ['규모', '총 20가구 (설치 기사 인터뷰 포함)'],
+      ['방법', '사전 과제 + 가정 방문 조사(홈비짓), 설치 현장 쉐도잉'],
+      ['대상', '에어컨 보유 가구, 신규 설치 고객, 설치 기사'],
+    ],
+    roles: [
+      { head: '조사 설계', items: [
+        '홈비짓 조사 설계',
+        '사전 과제 구성: 집 안 냉방 지도, 공간별 사진, 하루 냉방 다이어리',
+      ]},
+      { head: '현지 실사', items: [
+        '델리·첸나이 가정 방문 조사 직접 참여',
+        '현지 모더레이터 3명 교육 전담',
+        '일자별 현장 요약(Daily Key Notes) 정리',
+      ]},
+    ],
+  },
+
+  /* ================= 한국리서치 · 서브 참여 ================= */
+  {
+    show: true, key: false,
+    company: '한국리서치', client: '글로벌 가전 기업 L사', period: '2026', type: '해외 조사 · 데이터 수집',
+    tags: ['해외 조사'],
+    title: '인도·일본 자율주행 관련 조사',
+    roles: [{ head: '맡은 일', items: ['자율주행 관련 데이터 수집', '응답자 다이어리 정리'] }],
+  },
+  {
+    show: true, key: false,
+    company: '한국리서치', client: '글로벌 가전 기업 L사', period: '2026', type: '해외 조사 · 데스크리서치',
+    tags: ['해외 조사', '데스크리서치'],
+    title: '중국 아이스 냉장고 조사',
+    roles: [{ head: '맡은 일', items: ['심층 데스크리서치', '응답자 다이어리 정리', '해외 실사 세팅'] }],
+  },
+  {
+    show: true, key: false,
+    company: '한국리서치', client: '글로벌 가전 기업 L사', period: '2026', type: '제품 개발 조사 · 정성',
+    tags: ['정성 조사'],
+    title: '신규 의류관리기 플랫폼 조사',
+    roles: [{ head: '맡은 일', items: ['하이브리드 갱 보조 진행'] }],
+  },
+  {
+    show: true, key: false,
+    company: '한국리서치', client: '글로벌 가전 기업 L사', period: '2026', type: '해외 조사 · 데스크리서치',
+    tags: ['해외 조사', '데스크리서치'],
+    title: '호주 신규 건조기 플랫폼 조사',
+    roles: [{ head: '맡은 일', items: ['호주 시장 데스크리서치'] }],
+  },
+
+  /* ================= 케이스탯리서치 ================= */
+  {
+    show: true, key: false,
+    company: '케이스탯리서치', period: '2025 – 2026', type: '정책 조사 · 정량 + 정성',
+    tags: ['정량 조사', '정성 조사', '실사 관리'],
+    title: '국정과제 정책 만족도 조사',
+    metrics: [['28,800명', '본조사 규모'], ['130여 개', '정책 설명문'], ['10개', 'FGD 그룹 운영']],
+    task: '국정과제별 국민과 정책 수혜자의 만족도 측정',
+    outputs: ['응답자 제시용 정책 설명문', 'FGD 요약본', '전산 가이드 초안', '모니터링용 정책 설명문(2026)'],
+    summary: '국무조정실이 정부 국정과제에 대한 국민과 정책 수혜자의 만족도를 측정하는 조사입니다. 2025년에는 인턴으로 프로젝트 전반에 참여했고, 2026년에는 프리랜서 계약으로 모니터링용 정책 설명문 제작을 맡았습니다.',
+    scope: [
+      ['주관', '국무조정실 · 한국행정연구원'],
+      ['본조사', '2025.11 – 12'],
+      ['규모', '일반국민 19,200명 · 정책수혜자 9,600명'],
+      ['방법', '온라인 조사 중심, 정책수혜자 일부 면접 · 온라인 FGD 31개 그룹'],
+    ],
+    roles: [
+      { head: '2025', note: '인턴 · 프로젝트 전반 참여', items: [
+        '조사 실사 관리',
+        '응답자에게 제시할 정책 설명문 130여 개 작성',
+        '온라인 FGD 31개 그룹 중 10개 그룹 운영 지원, 발언 기록과 요약본 작성',
+        '전산 가이드 1차 초안 작성',
+      ]},
+      { head: '2026', note: '프리랜서 계약', items: ['모니터링 조사용 정책 설명문 제작'] },
+    ],
+  },
+  {
+    show: true, key: false,
+    company: '케이스탯리서치', period: '2025', type: '국가 단위 사회조사 · 정량',
+    tags: ['보고서 작성'],
+    title: '2025 한국인의 의식·가치관 조사',
+    metrics: [['6,180명', '전국 성인'], ['1996년~', '시계열 조사']],
+    outputs: ['통계표', '결과 해석 문구 초안', '보고서 시각화 자료', '외국인 설문지 번역본'],
+    summary: '1996년부터 이어져 온 문화체육관광부의 국민 의식 조사입니다. 조사 완료 후 결과 분석과 보고서 작성 단계에 참여했습니다.',
+    scope: [
+      ['주관', '문화체육관광부'],
+      ['규모', '전국 성인 6,180명, 국내 거주 외국인 별도 조사'],
+      ['결과 공표', '2025.12'],
+    ],
+    roles: [{ head: '분석 · 보고서', items: [
+      '통계표 작성과 결과 해석 문구 1차 초안 작성',
+      '보고서용 그래프·시각화 자료 제작',
+      '외국인 대상 조사 설문지 번역',
+      '보고서 수치·오탈자 검수',
+    ]}],
+    link: ['머니투데이 결과 보도', 'https://www.mt.co.kr/policy/2025/12/24/2025122320182454930'],
+  },
+  {
+    show: true, key: false,
+    company: '케이스탯리서치', period: '2025', type: '정부 조사 · 가구방문 면접',
+    tags: ['보고서 작성'],
+    title: '2025 시청점유율 기초조사',
+    metrics: [['11,104가구', '가구방문 면접'], ['21,433명', '가구원']],
+    outputs: ['보고서 장표', '결과 해석 문구'],
+    summary: '방송미디어통신위원회의 전국 미디어 이용 실태 조사입니다. 결과 보고서의 장표 제작과 보고서 문구 작업을 도맡았습니다.',
+    scope: [
+      ['주관', '방송미디어통신위원회'],
+      ['기간', '2025.08.18 – 10.22'],
+      ['규모', '11,104가구 · 만 13세 이상 21,433명'],
+      ['방법', 'TAPI 가구방문 면접조사'],
+    ],
+    roles: [{ head: '결과 보고서', items: ['보고서 장표 제작 전담', '결과 해석 문구 작성 전담'] }],
+  },
+  {
+    show: true, key: false,
+    company: '케이스탯리서치', period: '2025.09', type: '공공기관 평가 · 결과 보고서',
+    tags: ['보고서 작성', '데이터 가공'],
+    title: '2025 경상북도 공공기관 청렴도 측정',
+    metrics: [['21곳', '평가 기관'], ['1~5등급', '지표별 등급']],
+    outputs: ['지표별 기관 등급표'],
+    summary: '경상북도 산하 공공기관의 청렴 수준을 외부·내부 체감도와 기관의 청렴노력도로 측정해 기관별 등급을 산출하는 평가 조사입니다.',
+    scope: [
+      ['대상', '경상북도 산하 공공기관 21곳'],
+      ['지표', '종합청렴도 = 청렴체감도(외부·내부) + 청렴노력도'],
+    ],
+    roles: [{ head: '결과 보고서', items: [
+      '지표별 기관 등급표(1~5등급) 작성',
+      '원자료와 보고서 수치를 대조해 등급 불일치, 점수 누락, 오탈자 확인',
+    ]}],
+  },
+  {
+    show: true, key: false,
+    company: '케이스탯리서치', period: '2025', type: '지자체 사회조사 · 면접',
+    tags: ['정량 조사'],
+    title: '2025 경기도 사회조사',
+    metrics: [['31,740가구', '조사 가구'], ['59,942명', '만 15세 이상']],
+    summary: '경기도민의 복지, 주거·교통, 문화·여가, 교육, 소득·소비, 노동 6개 부문 삶의 질을 측정하는 조사로, 보조 연구원으로 참여했습니다.',
+    scope: [['기간', '2025.08.20 – 09.03'], ['규모', '31,740가구 · 만 15세 이상 59,942명']],
+    link: ['K이코노미뉴스 결과 보도', 'https://www.keconomynews.kr/news/article.html?no=42668'],
+  },
+
+  /* ---- 빈 칸: 내용을 채우고 show: true 로 바꾸면 나타납니다 ---- */
+  {
+    show: false, key: false,
+    company: '한국리서치', period: '2026', type: '분야 · 조사방법',
+    tags: [],
+    title: '프로젝트 이름',
+    summary: '어떤 조사였는지 한두 문장으로 적어주세요.',
+    roles: [{ head: '맡은 일', items: ['내가 한 일 1', '내가 한 일 2'] }],
+  },
+  {
+    show: false, key: false,
+    company: '한국리서치', period: '2026', type: '분야 · 조사방법',
+    tags: [],
+    title: '프로젝트 이름',
+    roles: [{ head: '맡은 일', items: ['내가 한 일 1', '내가 한 일 2'] }],
+  },
+];
+/* ▲▲▲ 프로젝트 목록 끝 ▲▲▲ (여기 아래는 고치지 않아도 됩니다) */
+
+(function(){
+  const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const all = PROJECTS.filter(p => p && p.show).map((p, i) => Object.assign({ tags: [] }, p, { _i: i }));
+  const companies = [];
+  all.forEach(p => { if (!companies.includes(p.company)) companies.push(p.company); });
+  const tags = [];
+  all.forEach(p => (p.tags || []).forEach(t => { if (!tags.includes(t)) tags.push(t); }));
+
+  const scopes = [{ key: 'all', label: '전체', test: () => true }, { key: 'key', label: '주요', test: p => p.key }]
+    .concat(companies.map(c => ({ key: 'c:' + c, label: c, test: p => p.company === c })));
+  let scope = scopes[0], tag = '', visible = all, sel = all[0];
+  const scopeEl = document.getElementById('scope'), tagSel = document.getElementById('tagSel'), nEl = document.getElementById('resultN');
+  scopeEl.innerHTML = scopes.map((f, i) => '<button type="button" role="tab" data-k="' + esc(f.key) + '" aria-selected="' + (i === 0) + '">' + esc(f.label) + '<small>' + all.filter(f.test).length + '</small></button>').join('');
+  tagSel.innerHTML += tags.map(t => '<option value="' + esc(t) + '">' + esc(t) + ' (' + all.filter(p => p.tags.includes(t)).length + ')</option>').join('');
+  function apply(){
+    visible = all.filter(p => scope.test(p) && (!tag || p.tags.includes(tag)));
+    if (!visible.includes(sel)) sel = visible[0];
+    nEl.innerHTML = '<b>' + visible.length + '</b>개 프로젝트' + (tag ? ' · ' + esc(tag) : '');
+    renderList(); renderDetail();
+  }
+  scopeEl.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    scope = scopes.find(x => x.key === b.dataset.k);
+    scopeEl.querySelectorAll('button').forEach(x => x.setAttribute('aria-selected', x === b));
+    apply();
+  });
+  tagSel.addEventListener('change', () => { tag = tagSel.value; apply(); });
+
+  const listEl = document.getElementById('pjList'), detEl = document.getElementById('detail'), pjEl = detEl.parentNode, featEl = document.getElementById('feat');
+  const mq = window.matchMedia('(max-width:980px)');
+  let open = true;
+
+  featEl.innerHTML = all.filter(p => p.key).map(p =>
+    '<button type="button" class="fcard" data-i="' + p._i + '"><span class="f-meta">' + esc(p.company) + ' · ' + esc(p.period) + '</span><span class="f-title">' + esc(p.title) + '</span>' +
+    (p.metrics ? '<span class="f-facts">' + p.metrics.slice(0, 3).map(m => esc(m[1]) + ' <b>' + esc(m[0]) + '</b>').join(' · ') + '</span>' : '') +
+    (p.task ? '<span class="f-task">' + esc(p.task) + '</span>' : '') + '<span class="f-more">자세히 보기 →</span></button>').join('');
+  featEl.addEventListener('click', e => {
+    const b = e.target.closest('.fcard'); if (!b) return;
+    sel = all.find(p => p._i === +b.dataset.i);
+    if (!visible.includes(sel)){
+      scope = scopes[0]; tag = ''; tagSel.value = '';
+      scopeEl.querySelectorAll('button').forEach((x, i) => x.setAttribute('aria-selected', i === 0));
+      visible = all; nEl.innerHTML = '<b>' + visible.length + '</b>개 프로젝트';
+    }
+    open = true; renderList(); renderDetail(true, true);
+  });
+
+  function renderList(){
+    if (!visible.length){ pjEl.appendChild(detEl); listEl.innerHTML = '<p class="empty">이 분류에 해당하는 프로젝트가 없습니다.</p>'; return; }
+    listEl.innerHTML = companies.filter(c => visible.some(p => p.company === c)).map(c =>
+      '<div class="pj-group"><h3>' + esc(c) + '<span>' + esc(COMPANIES[c] || '') + '</span></h3><ul>' +
+      visible.filter(p => p.company === c).map(p =>
+        '<li><button type="button" class="pj-item" data-i="' + p._i + '" aria-current="' + (p === sel) + '" aria-expanded="' + (p === sel && open) + '"><span class="t">' + (p.key ? '<span class="k">주요</span>' : '') + esc(p.title) + '</span><span class="m">' + esc(p.period) + ' · ' + esc(p.type) + '</span></button></li>').join('') +
+      '</ul></div>').join('');
+    place();
+  }
+  function place(){
+    if (mq.matches){
+      const btn = listEl.querySelector('.pj-item[aria-current="true"]');
+      if (btn && open){ btn.parentNode.appendChild(detEl); detEl.hidden = false; }
+      else { pjEl.appendChild(detEl); detEl.hidden = true; }
+    } else {
+      if (detEl.parentNode !== pjEl) pjEl.appendChild(detEl);
+      detEl.hidden = !sel;
+    }
+  }
+  listEl.addEventListener('click', e => {
+    const b = e.target.closest('.pj-item'); if (!b) return;
+    const p = all.find(x => x._i === +b.dataset.i);
+    if (mq.matches && p === sel) open = !open; else { sel = p; open = true; }
+    renderList(); renderDetail(true);
+  });
+  if (mq.addEventListener) mq.addEventListener('change', () => { open = true; renderList(); });
+
+  function renderDetail(scroll, fromCard){
+    if (!sel){ detEl.hidden = true; return; }
+    const p = sel, idx = visible.indexOf(p), prev = visible[idx - 1], next = visible[idx + 1];
+    let h = '<div class="d-head"><div class="d-meta"><b>' + esc(p.company) + '</b>' + (p.client ? '<span>' + esc(p.client) + '</span>' : '') + '<span>' + esc(p.period) + '</span><span>' + esc(p.type) + '</span></div><h3>' + esc(p.title) + '</h3>';
+    if (p.tags && p.tags.length) h += '<div class="d-tags">' + p.tags.map(t => '<span>' + esc(t) + '</span>').join('') + '</div>';
+    h += '</div><div class="d-body">';
+    if (p.metrics && p.metrics.length) h += '<p class="d-facts">' + p.metrics.map(m => '<span>' + esc(m[1]) + '<b>' + esc(m[0]) + '</b></span>').join('') + '</p>';
+    if (p.summary) h += '<p class="d-sum">' + esc(p.summary) + '</p>';
+    if (p.task) h += '<div><p class="step-l">과제</p><p class="task">' + esc(p.task) + '</p></div>';
+    if (p.roles && p.roles.length) h += '<div><p class="step-l">내가 한 일</p><div class="groups">' + p.roles.map(r => '<div class="group"><h4>' + esc(r.head) + (r.note ? '<small>' + esc(r.note) + '</small>' : '') + '</h4><ul>' + (r.items || []).map(t => '<li>' + esc(t) + '</li>').join('') + '</ul></div>').join('') + '</div></div>';
+    if (p.outputs && p.outputs.length) h += '<div><p class="step-l">결과물</p><div class="outs">' + p.outputs.map(t => '<span>' + esc(t) + '</span>').join('') + '</div></div>';
+    if (p.scope && p.scope.length) h += '<details class="more"><summary>조사 개요 보기</summary><table class="tbl">' + p.scope.map(r => '<tr><th>' + esc(r[0]) + '</th><td>' + esc(r[1]) + '</td></tr>').join('') + '</table></details>';
+    if (p.link) h += '<p><a class="link" href="' + esc(p.link[1]) + '" target="_blank" rel="noopener">' + esc(p.link[0]) + ' ↗</a></p>';
+    if (p.note) h += '<p class="note">' + esc(p.note) + '</p>';
+    h += '</div><div class="d-nav"><button type="button" data-go="-1"' + (prev ? '' : ' disabled') + '><small>← 이전</small><span>' + esc(prev ? prev.title : '처음입니다') + '</span></button><button type="button" data-go="1"' + (next ? '' : ' disabled') + '><small>다음 →</small><span>' + esc(next ? next.title : '마지막입니다') + '</span></button></div>';
+    detEl.innerHTML = h;
+    place();
+    detEl.classList.remove('swap'); void detEl.offsetWidth; if (scroll !== undefined) detEl.classList.add('swap');
+    if (scroll && !detEl.hidden){
+      const target = mq.matches ? (listEl.querySelector('.pj-item[aria-current="true"]') || detEl) : detEl;
+      const r = target.getBoundingClientRect();
+      if (fromCard || r.top < 60 || r.top > innerHeight * 0.6) target.scrollIntoView({ block: 'start' });
+    }
+  }
+  detEl.addEventListener('click', e => {
+    const b = e.target.closest('[data-go]'); if (!b || b.disabled) return;
+    sel = visible[visible.indexOf(sel) + (+b.dataset.go)]; open = true; renderList(); renderDetail(true);
+  });
+  apply();
+})();
+
+/* 논문 탭 */
+(function(){
+  const tabs = [...document.querySelectorAll('#paperTabs [role="tab"]')];
+  tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(x => { const on = x === t; x.setAttribute('aria-selected', on); document.getElementById(x.getAttribute('aria-controls')).hidden = !on; });
+  }));
+})();
+
+/* 상단 탭: 지금 보고 있는 섹션 표시 */
+(function(){
+  const links = [...document.querySelectorAll('#tabs a')];
+  const secs = links.map(a => document.querySelector(a.getAttribute('href')));
+  function spy(){
+    let on = -1;
+    secs.forEach((s, i) => { if (s && s.getBoundingClientRect().top < 120) on = i; });
+    links.forEach((a, i) => a.classList.toggle('on', i === on));
+  }
+  addEventListener('scroll', spy, { passive: true }); spy();
+})();
+
+
+/* 화면 테마(라이트/다크) 전환, 진행 표시줄, 맨 위로 버튼 */
+(function(){
+  const root = document.documentElement, KEY = 'yn-portfolio-theme';
+  const btn = document.getElementById('themeBtn'), lbl = document.getElementById('themeLbl');
+  const mq = window.matchMedia('(prefers-color-scheme: dark)');
+  try { const saved = localStorage.getItem(KEY); if (saved === 'dark' || saved === 'light') root.setAttribute('data-theme', saved); } catch (e) {}
+  const isDark = () => root.getAttribute('data-theme') ? root.getAttribute('data-theme') === 'dark' : mq.matches;
+  function sync(){
+    const d = isDark();
+    root.classList.toggle('is-dark', d);
+    lbl.textContent = d ? '라이트' : '다크';
+    btn.setAttribute('aria-label', d ? '라이트 모드로 바꾸기' : '다크 모드로 바꾸기');
+  }
+  btn.addEventListener('click', () => {
+    const next = isDark() ? 'light' : 'dark';
+    root.classList.add('theming');
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem(KEY, next); } catch (e) {}
+    sync();
+    setTimeout(() => root.classList.remove('theming'), 400);
+  });
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  new MutationObserver(sync).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+  sync();
+
+  const prog = document.getElementById('prog'), top = document.getElementById('totop');
+  function onScroll(){
+    const h = document.documentElement.scrollHeight - innerHeight;
+    prog.style.transform = 'scaleX(' + (h > 0 ? Math.min(1, scrollY / h) : 0) + ')';
+    top.classList.toggle('show', scrollY > 600);
+  }
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+})();
+
+document.getElementById('copyBtn').addEventListener('click', function(){
+  var btn = this, el = document.getElementById('email');
+  function done(){ btn.textContent = '복사됨'; setTimeout(function(){ btn.textContent = '복사'; }, 1600); }
+  function fallback(){ var r = document.createRange(); r.selectNodeContents(el); var s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = '선택됨'; }
+  try { navigator.clipboard.writeText(el.textContent).then(done, fallback); } catch (e) { fallback(); }
+});
+</script>
+</body>
+</html>
